@@ -1,5 +1,6 @@
-import { ContractMetadataJson } from "@zoralabs/protocol-sdk";
+import { ContractMetadataJson, TokenMetadataJson } from "@zoralabs/protocol-sdk";
 import { pinFileWithPinata, pinJsonWithPinata } from "@/lib/pinta";
+
 
 export async function makeContractMetadata({
     imageFile,
@@ -14,10 +15,13 @@ export async function makeContractMetadata({
     const imageFileIpfsUrl = await pinFileWithPinata(imageFile);
    
     // build contract metadata json
-    const metadataJson: ContractMetadataJson = {
+    const metadataJson = {
       description,
       image: imageFileIpfsUrl,
       name,
+      "properties": {
+        "category": "social"
+      },
     };
    
     // upload token metadata json to Pinata and get ipfs uri

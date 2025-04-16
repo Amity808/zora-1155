@@ -1,11 +1,7 @@
 import { http, createConfig } from 'wagmi'
 import { zoraTestnet, zoraSepolia, zora, base, baseSepolia } from 'wagmi/chains'
-import { createPublicClient, Chain, Hex } from "viem";
-// import { walletConnect, safe, coinbaseWallet } from "wagmi/connectors"
-import { createCoinCall } from '@zoralabs/coins-sdk';
-import { createCreatorClient} from "@zoralabs/protocol-sdk"
-import { useAccount } from 'wagmi';
-import { abi } from '../contract/MuseumFactory';
+import { createPublicClient } from "viem";
+
 
 export const config = createConfig({
   chains: [zoraSepolia, zoraTestnet, zora, base, baseSepolia],
@@ -30,6 +26,7 @@ export const config = createConfig({
 
 
  
+
 export const chain = zora;
  
 
