@@ -5,15 +5,17 @@ import useValidation from '@/hooks/useValidation'
 import { validateAmount } from '@/helper/validation'
 import { abi } from '../contract/MuseumFactory';
 import { abiMuseum } from '@/contract/Museum';
-import { useReadContract, useAccount, useSimulateContract, useWriteContract, usePublicClient } from 'wagmi';
+import { useReadContract, useAccount, useSimulateContract, useWriteContract, usePublicClient, useWalletClient } from 'wagmi';
 import { FactoryAddress, Address_Zero } from '@/helper/constant'
-import { parseEther } from 'viem';
+import { createWalletClient, Hex, http, parseEther } from 'viem';
 import Link from 'next/link';
-// import { creatorClient } from '../config/wagmi-config';
+// import { creatorClient, walletClient } from '../config/wagmi-config';
 import { create1155 } from '@zoralabs/protocol-sdk';
 import { makeContractMetadata } from '@/helper/Upload';
 import { makeTextNftMetadata } from '@/helper/tokenMetaData';
-
+import { createCoinCall, createCoin } from '@zoralabs/coins-sdk';
+import { base, baseSepolia } from 'viem/chains';
+import { publicClient } from '@/config/wagmi-config';
 
 const MintArtifact = () => {
 
@@ -28,8 +30,9 @@ const MintArtifact = () => {
     const isTicketPiceValid = useValidation(ticketPice, validateAmount);
 
     const { address } = useAccount();
-    const publicClient = usePublicClient()!;
-    const { writeContractAsync, writeContract } = useWriteContract();
+    // const publicClient = usePublicClient()!;
+    const { data: walletClientc } = useWalletClient()!;
+    const { writeContractAsync, writeContract, status } = useWriteContract();
 
     const { data: DeployAddressToNewContract } = useReadContract({
         abi: abi,
@@ -37,6 +40,12 @@ const MintArtifact = () => {
         functionName: "deployedAddressR",
         args: [address as `0x${string}`]
     })
+
+    // const walletClient = createWalletClient({
+    //     account: address as Hex,
+    //     chain: base,
+    //     transport: http('https://base.llamarpc.com'),
+    //   });
 
 
     console.log(DeployAddressToNewContract, "token")
@@ -59,11 +68,47 @@ const MintArtifact = () => {
         }
     }
 
+    
+      
+
+
+    const createToken = async () => {
+        try {
+            if (!address) {
+                alert("Please connect your wallet.");
+                return;
+            }
+            // const resTokenMeta = await makeTextNftMetadata({
+            //     text: "Museum Token",
+            //     description: "Museum Art Tradable token"
+            // })
+            // console.log(resTokenMeta, "resTokenMeta")
+            const coinParams = {
+                name: "Museum Token",
+                symbol: "MUSE",
+                uri: 'ipfs://bafkreiausuhse4h7c3i4g6jalnasxu5jjondktr335f45elow3epbhog3y',
+                payoutRecipient: address as `0x${string}`,
+                platformReferrer: address as `0x${string}`,
+            };
+
+            const contractCallParams = await createCoin(coinParams, walletClientc, publicClient);
+
+              
+            //   const { writeContract, status } = useWriteContract();
+
+            //   const response = await writeContract(writeConfig!.request);
+
+              console.log(contractCallParams, "response")
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
 
     const handleCreateZoraNFT = async () => {
-        
+
 
         try {
             if (!imageFile) {
@@ -72,7 +117,8 @@ const MintArtifact = () => {
             }
 
             const resTokenMeta = await makeTextNftMetadata({
-                text: "MuseumArt"
+                text: "MuseumArt",
+                description: "Museum Art Tradable token"
             })
 
             const resContractMetaData = await makeContractMetadata({
@@ -146,7 +192,7 @@ const MintArtifact = () => {
                     </>
                 )
             }
-            <div>
+            <div className=' flex items-center flex-col justify-center'>
                 <div className='form-group mb-8'>
                     <input
                         type='file'
@@ -165,9 +211,10 @@ const MintArtifact = () => {
                             }} className='input' />
                     </div>
                 </div>
-                <button type='submit' className='text-white' onClick={handleCreateZoraNFT}>Mint</button>
+                <button type='submit' className='text-black py-2 px-4 bg-white rounded-2xl mb-3' onClick={handleCreateZoraNFT}>Mint</button>
 
             </div>
+            <button type='submit' className='text-black p-2 bg-white rounded-2xl' onClick={createToken}>Create Token</button>
 
 
         </div>

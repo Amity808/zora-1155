@@ -132,6 +132,11 @@
     ethereum-cryptography "^2.0.0"
     micro-ftch "^0.3.1"
 
+"@hey-api/client-fetch@^0.8.3":
+  version "0.8.4"
+  resolved "https://registry.npmjs.org/@hey-api/client-fetch/-/client-fetch-0.8.4.tgz"
+  integrity sha512-SWtUjVEFIUdiJGR2NiuF0njsSrSdTe7WHWkp3BLH3DEl2bRhiflOnBo29NSDdrY90hjtTQiTQkBxUgGOF29Xzg==
+
 "@humanfs/core@^0.19.1":
   version "0.19.1"
   resolved "https://registry.npmjs.org/@humanfs/core/-/core-0.19.1.tgz"
@@ -521,6 +526,16 @@
   dependencies:
     js-cookie "^3.0.5"
     tiny-emitter "^2.1.0"
+
+"@openzeppelin/contracts-upgradeable@^5.0.2":
+  version "5.3.0"
+  resolved "https://registry.npmjs.org/@openzeppelin/contracts-upgradeable/-/contracts-upgradeable-5.3.0.tgz"
+  integrity sha512-yVzSSyTMWO6rapGI5tuqkcLpcGGXA0UA1vScyV5EhE5yw8By3Ewex9rDUw8lfVw0iTkvR/egjfcW5vpk03lqZg==
+
+"@openzeppelin/contracts@^5.0.2":
+  version "5.3.0"
+  resolved "https://registry.npmjs.org/@openzeppelin/contracts/-/contracts-5.3.0.tgz"
+  integrity sha512-zj/KGoW7zxWUE8qOI++rUM18v+VeLTTzKs/DJFkSzHpQFPD/jKKF0TrMxBfGLl3kpdELCNccvB3zmofSzm4nlA==
 
 "@paulmillr/qr@^0.2.1":
   version "0.2.1"
@@ -1093,6 +1108,22 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
+
+"@zoralabs/coins-sdk@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.npmjs.org/@zoralabs/coins-sdk/-/coins-sdk-0.0.8.tgz"
+  integrity sha512-haZPEpSO5Z/zqguXrOf4pxhikESdxlSMSDJW4+F64VLVHSNJhF7EYPV7Z9ofnUyIzvS7I4BeoLWjmTfLG4c2bw==
+  dependencies:
+    "@hey-api/client-fetch" "^0.8.3"
+    "@zoralabs/coins" "^0.7.1"
+
+"@zoralabs/coins@^0.7.1":
+  version "0.7.1"
+  resolved "https://registry.npmjs.org/@zoralabs/coins/-/coins-0.7.1.tgz"
+  integrity sha512-CGW8FHhr0WPkm6AT2Zyzyh6NnP728FAYtsqz6Z8JVmy365R1fw92oNLt4KGEBLeortSbPJDCwQjEaVZXz04gzw==
+  dependencies:
+    "@openzeppelin/contracts" "^5.0.2"
+    "@openzeppelin/contracts-upgradeable" "^5.0.2"
 
 "@zoralabs/protocol-deployments@^0.5.3":
   version "0.5.3"

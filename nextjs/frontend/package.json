@@ -11,6 +11,7 @@
   "dependencies": {
     "@opencampus/ocid-connect-js": "^1.2.6",
     "@tanstack/react-query": "^5.68.0",
+    "@zoralabs/coins-sdk": "^0.0.8",
     "@zoralabs/protocol-sdk": "^0.13.4",
     "clsx": "^2.1.1",
     "motion": "^12.5.0",

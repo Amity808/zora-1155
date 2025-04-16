@@ -1,11 +1,14 @@
 import { http, createConfig } from 'wagmi'
-import { zoraTestnet, zoraSepolia, zora } from 'wagmi/chains'
-import { createPublicClient, Chain } from "viem";
+import { zoraTestnet, zoraSepolia, zora, base, baseSepolia } from 'wagmi/chains'
+import { createPublicClient, Chain, Hex } from "viem";
 // import { walletConnect, safe, coinbaseWallet } from "wagmi/connectors"
-import { createCreatorClient, createCollectorClient, create1155} from "@zoralabs/protocol-sdk"
+import { createCoinCall } from '@zoralabs/coins-sdk';
+import { createCreatorClient} from "@zoralabs/protocol-sdk"
+import { useAccount } from 'wagmi';
+import { abi } from '../contract/MuseumFactory';
 
 export const config = createConfig({
-  chains: [zoraSepolia, zoraTestnet, zora],
+  chains: [zoraSepolia, zoraTestnet, zora, base, baseSepolia],
   connectors: [
     // injected(),
     // safe(),
@@ -16,6 +19,8 @@ export const config = createConfig({
     // })
   ],
   transports: {
+    [baseSepolia.id]: http(),
+    [base.id]: http(),
     [zora.id]: http(),
     [zoraTestnet.id]: http(),
     [zoraSepolia.id]: http(),
@@ -27,17 +32,23 @@ export const config = createConfig({
  
 export const chain = zora;
  
+
+// const { address } = useAccount();
 export const publicClient = createPublicClient({
-  chain: chain as Chain,
-  transport: http(),
+  chain: base,
+  transport: http('https://base.llamarpc.com'),
 });
 
+// export const walletClient = createWalletClient({
+//   account: address as Hex,
+//   chain: baseSepolia,
+//   transport: http(),
+// });
 
-
-export const creatorClient = createCreatorClient({
-  chainId: zoraSepolia.id,
-  publicClient,
-})
+// export const creatorClient = createCreatorClient({
+//   chainId: baseSepolia.id,
+//   publicClient,
+// })
 
 // export const client1155 = creatorClient.create1155({
 //   contract: {

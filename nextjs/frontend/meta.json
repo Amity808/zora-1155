@@ -1,0 +1,14 @@
+{
+    "name": "Museum Token",
+    "description": "Museum Token is a digital asset that represents ownership of a unique piece of art.",
+    "image": "ipfs://QmeYZRFyQFpKfmQufz9Us72U92J3B2szdKCqPLKyLUszsu",
+    "animation_url": "ipfs://QmfR7Y5kTLMaqGVVRopX5VV5ZsMYW6GRkSi8BpEkbAG7Jr",
+    "properties": {
+    "category": "social"
+  },
+    "content": {
+    "mime": "text/plain",
+    "uri": "ipfs://QmfR7Y5kTLMaqGVVRopX5VV5ZsMYW6GRkSi8BpEkbAG7Jr"
+    },
+    "attributes": []
+    }
