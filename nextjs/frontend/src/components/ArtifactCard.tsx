@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { getCoin } from "@zoralabs/coins-sdk";
-import { base } from 'viem/chains';
-import { div } from 'motion/react-client';
+import { tradeCoin } from "@zoralabs/coins-sdk";
+import { usePublicClient, useWalletClient, useAccount } from 'wagmi';
+import { parseEther } from 'viem';
 
 
 type TokenDetails = {
@@ -64,7 +64,30 @@ type TokenDetails = {
 
 const ArtifactCard = () => {
     const [tokenDetails, setTokenDetails] = useState<TokenDetails | null>(null)
+    const publicClient = usePublicClient()!;
+    const { data: walletClientc } = useWalletClient()!;
+    
 
+    const { address } = useAccount();
+
+    const buyParams = {
+        direction: "buy" as const,
+        target: "0xCoinContractAddress" as `0x${string}`,
+        args: {
+            recipient: address as `0x${string}`, // Where to receive the purchased coins
+            orderSize: parseEther("0.1"), // Amount of ETH to spend
+            minAmountOut: BigInt(0), // Minimum amount of coins to receive (0 = no minimum)
+            tradeReferrer: "0xOptionalReferrerAddress" as `0x${string}`, // Optional
+        }
+    };
+
+    const tradeCoinMuse = async () => {
+        try {
+            const result = await tradeCoin(buyParams, walletClientc, publicClient);
+        } catch (error) {
+            console.error("Error trading coin:", error);
+        }
+    }
     const fetchCoinDetails = useCallback(async () => {
         // const response = await getCoin({
         //     address: "0x224Ba15a5762A1114B0532143d91Fe0B37b1c247",
@@ -121,7 +144,7 @@ const ArtifactCard = () => {
                     </h2>
                     <p>{tokenDetails?.zora20Token?.description} Read for ....</p>
                     <div className="card-actions justify-end">
-                        <div className="badge badge-outline">Trade</div>
+                        <div className="badge badge-outline cursor-pointer" onClick={tradeCoinMuse}>Trade</div>
                         <div className="badge badge-outline cursor-pointer" >Read More</div>
                     </div>
                 </div>

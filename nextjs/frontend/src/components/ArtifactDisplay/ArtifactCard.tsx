@@ -36,6 +36,7 @@ const ArtifactCard = () => {
 
     // const parsedId = BigInt(id); 
     const [artifacts, setArtifacts] = useState<ResultFect>()
+    
     // const [deployFactoryDetails, setDeployFactoryDetails] = useState<DeployDetails>()
 
     // const { data: DeployFactoryDetails } = useReadContract({

@@ -8,6 +8,8 @@ import { create1155 } from '@zoralabs/protocol-sdk';
 import { makeContractMetadata } from '@/helper/Upload';
 import { makeTextNftMetadata } from '@/helper/tokenMetaData';
 import { createCoin } from '@zoralabs/coins-sdk';
+import useLoading from '@/hooks/useLoading';
+
 
 
 const MintArtifact = () => {
@@ -16,6 +18,8 @@ const MintArtifact = () => {
     const [description, setDescription] = useState<string>('')
     const [name, setName] = useState<string>('')
     const [symbol, setSymbol] = useState<string>('')
+
+    const {startLoading, stopLoading, isLoading} = useLoading()
 
 
 
@@ -58,6 +62,7 @@ const MintArtifact = () => {
 
 
     const createToken = async () => {
+        startLoading();
         try {
             if (!address) {
                 alert("Please connect your wallet.");
@@ -88,9 +93,10 @@ const MintArtifact = () => {
 
 
             console.log(contractCallParams, "response")
-
+            
         } catch (error) {
             console.log(error);
+            stopLoading();
         }
     }
 
@@ -186,7 +192,9 @@ const MintArtifact = () => {
                 </div>
 
             </div>
-            <button type='submit' className='text-black p-2 bg-white rounded-2xl' onClick={createToken}>Create Token</button>
+            <button type='submit' className='text-black p-2 bg-white rounded-2xl' disabled={isLoading} onClick={createToken}>
+                {isLoading ? "Creating..." : "Create Token"}
+            </button>
 
 
         </div>
