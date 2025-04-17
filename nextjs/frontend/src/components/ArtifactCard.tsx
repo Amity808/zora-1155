@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { getCoin } from "@zoralabs/coins-sdk";
 import { base } from 'viem/chains';
+import { div } from 'motion/react-client';
 
 
 type TokenDetails = {
@@ -62,40 +63,86 @@ type TokenDetails = {
 
 
 const ArtifactCard = () => {
-    const [tokenDetails, setTokenDetails] = useState<TokenDetails>({})
+    const [tokenDetails, setTokenDetails] = useState<TokenDetails | null>(null)
 
     const fetchCoinDetails = useCallback(async () => {
-        const response = await getCoin({
-            address: "0x224Ba15a5762A1114B0532143d91Fe0B37b1c247",
-            chain: base.id,
-        })
-        if (response?.data) {
-            setTokenDetails(response.data);
+        // const response = await getCoin({
+        //     address: "0x224Ba15a5762A1114B0532143d91Fe0B37b1c247",
+        //     chain: base.id,
+        // })
+        // if (response?.data) {
+        //     setTokenDetails(response.data);
+        // }
+        // return response;
+        try {
+            const url = new URL('https://api-sdk.zora.engineering/coin');
+            url.searchParams.append('address', '0x224Ba15a5762A1114B0532143d91Fe0B37b1c247');
+            url.searchParams.append('chain', '8453');
+
+            const response = await fetch(url.toString(), {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch coin details');
+            }
+
+            const data = await response.json();
+            if (data) {
+                setTokenDetails(data);
+            }
+        } catch (error) {
+            console.error("Error fetching coin details:", error);
         }
-        return response;
     }, [])
 
     useEffect(() => {
         fetchCoinDetails()
-    },[fetchCoinDetails])
+    }, [fetchCoinDetails])
 
     console.log(tokenDetails)
     return (
-        <div className="card bg-base-100 w-96 shadow-sm">
-            <figure>
-                <img
-                    src="/artifact.webp"
-                    alt="Shoes" />
-            </figure>
-            <div className="card-body">
-                <h2 className="card-title">
-                    Mongolia Tomb
-                    <div className="badge badge-secondary">Artifact</div>
-                </h2>
-                <p>This is a mongolia tomb, which serves as a sacred tomb for the mongolia. Read for ....</p>
-                <div className="card-actions justify-end">
-                    <div className="badge badge-outline">Historical</div>
-                    <div className="badge badge-outline cursor-pointer" >Read More</div>
+        <div>
+
+
+            <div className="card bg-base-100 w-96 shadow-sm">
+                <figure>
+                    <img
+                        src={tokenDetails?.zora20Token?.mediaContent?.previewImage?.medium || "/artifact.webp"}
+                        alt="Shoes" className='w-[250px]' />
+                </figure>
+                <div className="card-body">
+                    <h2 className="card-title">
+                        {tokenDetails?.zora20Token?.name}
+                        <div className="badge badge-secondary">{tokenDetails?.zora20Token?.symbol}</div>
+                    </h2>
+                    <p>{tokenDetails?.zora20Token?.description} Read for ....</p>
+                    <div className="card-actions justify-end">
+                        <div className="badge badge-outline">Trade</div>
+                        <div className="badge badge-outline cursor-pointer" >Read More</div>
+                    </div>
+                </div>
+            </div>
+            {/* second dummy  */}
+            <div className="card bg-base-100 w-96 shadow-sm">
+                <figure>
+                    <img
+                        src="/artifact.webp"
+                        alt="Shoes" />
+                </figure>
+                <div className="card-body">
+                    <h2 className="card-title">
+                        Mongolia Tomb
+                        <div className="badge badge-secondary">Artifact</div>
+                    </h2>
+                    <p>This is a mongolia tomb, which serves as a sacred tomb for the mongolia. Read for ....</p>
+                    <div className="card-actions justify-end">
+                        <div className="badge badge-outline">Historical</div>
+                        <div className="badge badge-outline cursor-pointer" >Read More</div>
+                    </div>
                 </div>
             </div>
         </div>
