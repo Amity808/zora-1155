@@ -66,20 +66,40 @@ const ArtifactCard = () => {
     const [tokenDetails, setTokenDetails] = useState<TokenDetails | null>(null)
     const publicClient = usePublicClient()!;
     const { data: walletClientc } = useWalletClient()!;
+    const [orderAmountBuy, setorderAmountBuy] = useState("");
+    const [orderAmountSell, setOrderAmountSell] = useState("");
     
 
     const { address } = useAccount();
 
     const buyParams = {
         direction: "buy" as const,
-        target: "0xCoinContractAddress" as `0x${string}`,
+        target: address as `0x${string}`,
         args: {
-            recipient: address as `0x${string}`, // Where to receive the purchased coins
-            orderSize: parseEther("0.1"), // Amount of ETH to spend
-            minAmountOut: BigInt(0), // Minimum amount of coins to receive (0 = no minimum)
-            tradeReferrer: "0xOptionalReferrerAddress" as `0x${string}`, // Optional
+            recipient: address as `0x${string}`, 
+            orderSize: parseEther(orderAmountBuy.toString()), 
+            minAmountOut: BigInt(0), 
         }
     };
+
+    const sellParams = {
+        direction: "sell" as const,
+        target: "0xCoinContractAddress" as `0x${string}`,
+        args: {
+          recipient: address as `0x${string}`, // Where to receive the ETH
+          orderSize: parseEther(orderAmountSell.toString()), // Amount of coins to sell
+          minAmountOut: parseEther("0.0000005"), // Minimum ETH to receive
+          tradeReferrer: "0x0000000000000000000000000000000000000000" as `0x${string}`, // Optional
+        }
+      };
+
+      const sellCoinMuse = async () => {
+        try {
+            const result = await tradeCoin(sellParams, walletClientc, publicClient);
+        } catch (error) {
+            console.error("Error trading coin:", error);
+        }
+      }
 
     const tradeCoinMuse = async () => {
         try {
