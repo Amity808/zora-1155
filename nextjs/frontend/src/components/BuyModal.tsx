@@ -1,60 +1,73 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react'
 import { usePublicClient, useWalletClient, useAccount } from 'wagmi';
 import { parseEther } from 'viem';
 import { tradeCoin } from "@zoralabs/coins-sdk";
 import { toast } from 'react-toastify';
 
+interface BuyTokenProps {
+    targetAddrress: `0x${string}`;
+}
 
 
-
-const BuyToken = () => {
+const BuyToken = ({ targetAddrress }: BuyTokenProps) => {
     const [tokenAmount, setTokenAmount] = useState('');
 
     const publicClient = usePublicClient()!;
     const { data: walletClientc } = useWalletClient()!;
-    const { address} = useAccount();
+    const { address } = useAccount();
     const [orderAmountBuy, setorderAmountBuy] = useState("");
 
 
-    const sellParams = {
-        direction: "sell" as const,
-        target: "0xCoinContractAddress" as `0x${string}`,
+    const buyParams = {
+        direction: "buy" as const,
+        target: targetAddrress as `0x${string}`,
         args: {
-          recipient: address as `0x${string}`, // Where to receive the ETH
-          orderSize: parseEther(orderAmountBuy?.toString()),
-          minAmountOut: parseEther("0.0000005"),
-          tradeReferrer: "0x0000000000000000000000000000000000000000" as `0x${string}`, // Optional
+            recipient: address as `0x${string}`, // Where to receive the ETH
+            orderSize: parseEther(orderAmountBuy?.toString()),
+            minAmountOut: parseEther("0.0000005"),
+            sqrtPriceLimitX96: BigInt(1),
+            tradeReferrer: "0xbA5a586b0aCeD5be0daC760554eeDcf8C71c168c" as `0x${string}`, // Optional
         }
-      };
+    };
 
-      const buyCoinMuse = async () => {
+    const buyCoinMuse = async () => {
         try {
-          
-            const result = await tradeCoin(sellParams, walletClientc!, publicClient);
-            if(result) {
+
+            const result = await  tradeCoin(buyParams, walletClientc!, publicClient);
+            if (result) {
                 toast.success("Coin successfully bought!");
             }
         } catch (error) {
-            console.error("Error trading coin:", error);
+            console.log("Error trading coin:", error);
+            toast.error("Error trading coin: " + error);
         }
-      }
+    }
 
     return (
         <div>
-            <a href="#my_modal_8" className="btn">sell coin</a>
+            
 
-            {/* Put this part before </body> tag */}
-            <div className="modal" role="dialog" id="my_modal_8">
+            <button className="btn" onClick={() => {
+                const modal = document.getElementById('my_modal_3') as HTMLDialogElement | null;
+                if (modal) modal.showModal();
+            }}>Buy coin</button>
+            <dialog id="my_modal_3" className="modal">
                 <div className="modal-box">
-                    <h3 className="text-lg font-bold">Hello!</h3>
-                    <p className="py-4">Sell Your token here input amount.</p>
+                    <form method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+                    <h3 className="font-bold text-lg">Hello!</h3>
+                    <p className="py-4">Press ESC key or click on ✕ button to close</p>
+                    <p className="py-4">Input Your token amount here.</p>
+
                     <div className="modal-action">
-                       <input type="text" name="orderAmount" id="orderamount" value={orderAmountBuy}
-                       onChange={(e) => setorderAmountBuy(e.target.value)} />
-                       <button type="submit" onClick={buyCoinMuse}>Buy</button>
+                        <input type="number" name="orderAmount" className=' text-black border-2 border-black' value={orderAmountBuy}
+                            onChange={(e) => setorderAmountBuy(e.target.value)} />
+                        <a type="submit" className='btn' onClick={buyCoinMuse}>Buy</a>
                     </div>
                 </div>
-            </div>
+            </dialog>
         </div>
     )
 }

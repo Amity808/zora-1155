@@ -129,8 +129,8 @@ const ArtifactCard = () => {
                     </h2>
                     <p>{tokenDetails?.zora20Token?.description} Read for ....</p>
                     <div className="card-actions justify-end">
-                        <BuyToken />
-                        <SellToken />
+                    <BuyToken targetAddrress={(tokenDetails?.zora20Token?.address || "0x0000000000000000000000000000000000000000") as `0x${string}`} />
+                    <SellToken targetAddrress={(tokenDetails?.zora20Token?.address || "0x0000000000000000000000000000000000000000") as `0x${string}`} />
                     </div>
                 </div>
             </div>
