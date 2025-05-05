@@ -10,16 +10,26 @@ import { makeTextNftMetadata } from '@/helper/tokenMetaData';
 import { createCoin } from '@zoralabs/coins-sdk';
 import useLoading from '@/hooks/useLoading';
 
+import { toast } from 'react-toastify';
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY!,
+    dangerouslyAllowBrowser: true, // Only use this in a secure environment
+});
+
 
 
 const MintArtifact = () => {
 
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [videoAnime, setVideoAnime] = useState<string>('')
+    const [prompt, setPrompt] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const [name, setName] = useState<string>('')
     const [symbol, setSymbol] = useState<string>('')
 
-    const {startLoading, stopLoading, isLoading} = useLoading()
+    const { startLoading, stopLoading, isLoading } = useLoading()
 
 
 
@@ -60,6 +70,30 @@ const MintArtifact = () => {
 
 
 
+    // TODO implement a generative AI that generate Description to Video
+
+    const generateImageWithOpenAI = async (prompt: string) => {
+        try {
+            const response = await openai.images.generate({
+                model: "dall-e-3", // Use DALL·E 3 model
+                prompt: prompt,
+                n: 1, // Number of images to generate
+                size: "1024x1024", // Image size
+            });
+
+            const imageUrl = response?.data?.[0].url || null;
+            if (!imageUrl) {
+                throw new Error("Failed to generate image");
+            }
+        
+             // Set the generated image in state
+            return imageUrl;
+        } catch (error) {
+            console.error("Error generating image with OpenAI:", error);
+            throw error;
+        }
+    };
+
 
     const createToken = async () => {
         startLoading();
@@ -73,13 +107,22 @@ const MintArtifact = () => {
                 return;
             }
 
+            if (!videoAnime) {
+                alert("Please upload an video file.");
+                return;
+            }
+
+            const animeFile = await generateImageWithOpenAI(prompt);
+            setVideoAnime(animeFile)
+
             const resContractMetaData = await makeContractMetadata({
                 imageFile,
                 name: "Museum Art",
-                description: description
+                description: description,
+                videoFile: animeFile
             });
 
-            // console.log(resContractMetaData, "resContractMetaData")
+
             const coinParams = {
                 name: name,
                 symbol: symbol,
@@ -89,11 +132,11 @@ const MintArtifact = () => {
                 platformReferrer: address as `0x${string}`,
             };
 
-            const contractCallParams = await createCoin(coinParams, walletClientc, publicClient);
+            const contractCallParams = await createCoin(coinParams, walletClientc!, publicClient);
 
 
             console.log(contractCallParams, "response")
-            
+
         } catch (error) {
             console.log(error);
             stopLoading();
@@ -111,15 +154,24 @@ const MintArtifact = () => {
                 return;
             }
 
+            if (!videoAnime) {
+                alert("Please upload an video file.");
+                return;
+            }
+
             const resTokenMeta = await makeTextNftMetadata({
                 text: "MuseumArt",
                 description: "Museum Art Tradable token"
             })
 
+            const animeFile = await generateImageWithOpenAI(prompt);
+
+
             const resContractMetaData = await makeContractMetadata({
                 imageFile,
                 name: "Museum Art",
-                description: description
+                description: description,
+                videoFile: animeFile
             });
             const { parameters, contractAddress } = await create1155({
                 contract: {
@@ -155,6 +207,9 @@ const MintArtifact = () => {
         <div className=' flex justify-center items-center mt-[24px] flex-col'>
 
             <div className=' flex items-center flex-col justify-center'>
+            <div className="image">
+          <img src={videoAnime} alt="AI Generated Image" />
+        </div>
 
                 <div className='form-group mb-8'>
                     <fieldset className="fieldset">
@@ -171,6 +226,15 @@ const MintArtifact = () => {
                         />
                         <label className="fieldset-label">Max size 2MB</label>
                     </fieldset>
+                    <div className='form-group mb-8'>
+                        <input
+                            type='text'
+                            placeholder='Prompt for Image Video' 
+                            value={prompt}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrompt(e.target.value)}
+                            className='input'
+                        />
+                    </div>
                     <div className='form-group mb-8'>
                         <input type='text' className='input'
                             value={name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
@@ -196,6 +260,7 @@ const MintArtifact = () => {
                 {isLoading ? "Creating..." : "Create Token"}
             </button>
 
+            
 
         </div>
     )

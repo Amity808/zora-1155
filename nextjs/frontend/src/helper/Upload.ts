@@ -4,21 +4,25 @@ import { pinFileWithPinata, pinJsonWithPinata } from "@/lib/pinta";
 
 export async function makeContractMetadata({
     imageFile,
+    videoFile,
     name,
     description,
   }: {
     imageFile: File;
+    videoFile: string;
     name: string;
     description?: string;
   }) {
     // upload image to Pinata
     const imageFileIpfsUrl = await pinFileWithPinata(imageFile);
+    // const animationVideo = await pinFileWithPinata(videoFile)
    
     // build contract metadata json
     const metadataJson = {
       description,
       image: imageFileIpfsUrl,
       name,
+      animation_url: videoFile,
       "properties": {
         "category": "social"
       },

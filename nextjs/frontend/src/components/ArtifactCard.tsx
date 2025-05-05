@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { tradeCoin } from "@zoralabs/coins-sdk";
 import { usePublicClient, useWalletClient, useAccount } from 'wagmi';
-import { parseEther } from 'viem';
+import BuyToken from './BuyModal';
+import SellToken from './SellModal';
 
 
 type TokenDetails = {
@@ -72,42 +72,7 @@ const ArtifactCard = () => {
 
     const { address } = useAccount();
 
-    const buyParams = {
-        direction: "buy" as const,
-        target: address as `0x${string}`,
-        args: {
-            recipient: address as `0x${string}`, 
-            orderSize: parseEther(orderAmountBuy.toString()), 
-            minAmountOut: BigInt(0), 
-        }
-    };
-
-    const sellParams = {
-        direction: "sell" as const,
-        target: "0xCoinContractAddress" as `0x${string}`,
-        args: {
-          recipient: address as `0x${string}`, // Where to receive the ETH
-          orderSize: parseEther(orderAmountSell.toString()), // Amount of coins to sell
-          minAmountOut: parseEther("0.0000005"), // Minimum ETH to receive
-          tradeReferrer: "0x0000000000000000000000000000000000000000" as `0x${string}`, // Optional
-        }
-      };
-
-      const sellCoinMuse = async () => {
-        try {
-            const result = await tradeCoin(sellParams, walletClientc, publicClient);
-        } catch (error) {
-            console.error("Error trading coin:", error);
-        }
-      }
-
-    const tradeCoinMuse = async () => {
-        try {
-            const result = await tradeCoin(buyParams, walletClientc, publicClient);
-        } catch (error) {
-            console.error("Error trading coin:", error);
-        }
-    }
+   
     const fetchCoinDetails = useCallback(async () => {
         // const response = await getCoin({
         //     address: "0x224Ba15a5762A1114B0532143d91Fe0B37b1c247",
@@ -164,8 +129,8 @@ const ArtifactCard = () => {
                     </h2>
                     <p>{tokenDetails?.zora20Token?.description} Read for ....</p>
                     <div className="card-actions justify-end">
-                        <div className="badge badge-outline cursor-pointer" onClick={tradeCoinMuse}>Trade</div>
-                        <div className="badge badge-outline cursor-pointer" >Read More</div>
+                        <BuyToken />
+                        <SellToken />
                     </div>
                 </div>
             </div>
