@@ -2,9 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react'
 import { BackgroundGradient } from '../ui/background-gradient'
 import Image from 'next/image'
 import { useReadContract } from "wagmi"
-import { abi } from "@/contract/MuseumFactory";
 import { abiMuseum } from '@/contract/Museum';
-import { FactoryAddress } from "@/helper/constant";
 
 // interface ArtifactInterface {
 //     id: string | number;

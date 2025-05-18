@@ -1,4 +1,3 @@
-import { ContractMetadataJson, TokenMetadataJson } from "@zoralabs/protocol-sdk";
 import { pinFileWithPinata, pinJsonWithPinata } from "@/lib/pinta";
 
 

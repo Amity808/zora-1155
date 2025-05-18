@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, createContext, useCallback, useState} from "react"
-import { useAccount, useReadContract, useWriteContract}  from "wagmi"
+import { useAccount, useReadContract}  from "wagmi"
 import { FactoryAddress  } from "@/helper/constant";
 // import { abiMuseum } from "@/contract/Museum";
 import { abi } from "@/contract/MuseumFactory";
@@ -18,11 +18,10 @@ export const Museum = ({ children } : { children: React.ReactNode }) => {
     const id = 0;
     const [deployArray, setDeployArray] = useState<number[]>([]);
     const [deployFactoryDetails, setDeployFactoryDetails] = useState<DeployDetails>()
-
+    console.log(deployFactoryDetails)
 
 
     const { address } = useAccount();
-    // const { writeContractAsync } = useWriteContract();
 
     const { data: DeployAddressToNewContract } = useReadContract({
         abi: abi,
@@ -53,14 +52,14 @@ export const Museum = ({ children } : { children: React.ReactNode }) => {
         args: [BigInt(0)]
     })
 
-    const getFactoryDetails = useCallback(() => {
-        if (!DeployFactoryDetails) return null;
-        setDeployFactoryDetails({
-            name: DeployFactoryDetails[0],
-            location: DeployFactoryDetails[1],
-            address: `0x${DeployFactoryDetails[2]}`
-        })
-    }, [])
+    // const getFactoryDetails = useCallback(() => {
+    //     if (!DeployFactoryDetails) return null;
+    //     setDeployFactoryDetails({
+    //         name: DeployFactoryDetails[0],
+    //         location: DeployFactoryDetails[1],
+    //         address: `0x${DeployFactoryDetails[2]}`
+    //     })
+    // }, [])
 
     console.log(getDeployAddress)
     // console.log(DeployAddressCount)

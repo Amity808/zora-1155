@@ -30,6 +30,4 @@ import {
     return jsonMetadataUri;
   }
 
-  const makeTokenMetadata = async ({}) => {
-    
-  }
+  

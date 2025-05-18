@@ -5,7 +5,7 @@ import { useWriteContract, useSimulateContract, useReadContract, useAccount } fr
 import { abi } from '../contract/MuseumFactory';
 import { FactoryAddress, USDT } from '@/helper/constant'
 import useValidation from '@/hooks/useValidation'
-import { validateName, validateAmount } from '@/helper/validation'
+import { validateName } from '@/helper/validation'
 import CustomInput from './ui/CustomInput';
 // import CustomButton from './ui/CustomButton';
 // import { ethers } from "ethers";

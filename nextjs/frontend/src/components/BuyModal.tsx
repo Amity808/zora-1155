@@ -10,7 +10,6 @@ interface BuyTokenProps {
 
 
 const BuyToken = ({ targetAddrress }: BuyTokenProps) => {
-    const [tokenAmount, setTokenAmount] = useState('');
 
     const publicClient = usePublicClient()!;
     const { data: walletClientc } = useWalletClient()!;
