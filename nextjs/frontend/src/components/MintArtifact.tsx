@@ -107,10 +107,7 @@ const MintArtifact = () => {
                 return;
             }
 
-            if (!videoAnime) {
-                alert("Please upload an video file.");
-                return;
-            }
+           
 
             const animeFile = await generateImageWithOpenAI(prompt);
             setVideoAnime(animeFile)

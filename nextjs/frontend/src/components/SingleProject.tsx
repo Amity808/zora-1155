@@ -1,9 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { usePublicClient, useWalletClient, useAccount } from 'wagmi';
-import BuyToken from './BuyModal';
-import SellToken from './SellModal';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import React, { useState, useCallback, useEffect } from 'react'
+import { useParams } from 'next/navigation';
 
 type TokenDetails = {
     zora20Token?: {
@@ -61,19 +57,10 @@ type TokenDetails = {
         };
     };
 };
-
-
-const ArtifactCard = () => {
+const SingleProject = () => {
     const [tokenDetails, setTokenDetails] = useState<TokenDetails | null>(null)
-    const publicClient = usePublicClient()!;
-    const { data: walletClientc } = useWalletClient()!;
- 
-    const router = useRouter();
-    
 
-    const { address } = useAccount();
-
-   
+    const { id } = useParams();
     const fetchCoinDetails = useCallback(async () => {
         // const response = await getCoin({
         //     address: "0x224Ba15a5762A1114B0532143d91Fe0B37b1c247",
@@ -85,7 +72,7 @@ const ArtifactCard = () => {
         // return response;
         try {
             const url = new URL('https://api-sdk.zora.engineering/coin');
-            url.searchParams.append('address', '0x224Ba15a5762A1114B0532143d91Fe0B37b1c247');
+            url.searchParams.append('address', `${id}`);
             url.searchParams.append('chain', '8453');
 
             const response = await fetch(url.toString(), {
@@ -112,45 +99,25 @@ const ArtifactCard = () => {
         fetchCoinDetails()
     }, [fetchCoinDetails])
 
-    console.log(tokenDetails)
+
+    const dummyImage = "https://plus.unsplash.com/premium_photo-1723028769916-a767a6b0f719?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZmlsZSUyMGljb258ZW58MHx8MHx8fDA%3D";
     return (
-        <div>
-
-
-            <div className="card bg-base-100 w-96 shadow-sm">
-                <figure>
-                    <img
-                        src={tokenDetails?.zora20Token?.mediaContent?.previewImage?.medium || "/artifact.webp"}
-                        alt="Shoes" className='w-[250px]' />
-                </figure>
-                <div className="card-body">
-                    <h2 className="card-title">
-                        {tokenDetails?.zora20Token?.name}
-                        <div className="badge badge-secondary">{tokenDetails?.zora20Token?.symbol}</div>
-                    </h2>
-                    <p>{tokenDetails?.zora20Token?.description} Read for ....</p>
-                    <div className="card-actions justify-end">
-                    <BuyToken targetAddrress={(tokenDetails?.zora20Token?.address || "0x0000000000000000000000000000000000000000") as `0x${string}`} />
-                    <SellToken targetAddrress={(tokenDetails?.zora20Token?.address || "0x0000000000000000000000000000000000000000") as `0x${string}`} />
+        <div className="bg-black text-white p-8">
+            <div className="max-w-4xl mx-auto">
+                <h1 className='text-3xl font-bold mb-6'>Project Details</h1>
+                <div className='flex flex-col md:flex-row'>
+                    <div className='w-full md:w-1/2'>
+                        <img src={dummyImage} alt="Project Image" className="rounded-lg shadow-lg" />
                     </div>
-                </div>
-            </div>
-            {/* second dummy  */}
-            <div className="card bg-base-100 w-96 shadow-sm">
-                <figure>
-                    <img
-                        src="/artifact.webp"
-                        alt="Shoes" />
-                </figure>
-                <div className="card-body">
-                    <h2 className="card-title">
-                        Mongolia Tomb
-                        <div className="badge badge-secondary">Artifact</div>
-                    </h2>
-                    <p>This is a mongolia tomb, which serves as a sacred tomb for the mongolia. Read for .... <Link href={`/${tokenDetails?.zora20Token?.address}`}></Link> </p>
-                    <div className="card-actions justify-end">
-                        <div className="badge badge-outline">Historical</div>
-                        <div className="badge badge-outline cursor-pointer" >Read More</div>
+                    <div className='w-full md:w-1/2 p-4'>
+                        <h2 className='text-2xl font-semibold mb-4'>Token Name</h2>
+                        <p className='text-gray-300 mb-6'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at ligula id urna facilisis tincidunt.</p>
+                        <div className="mb-6">
+                            <h3 className="text-xl font-semibold mb-2">Research Auth Address</h3>
+                            <p className="text-gray-400">0x1234...5678</p>
+                        </div>
+                        <button className='btn mt-4 bg-blue-600 hover:bg-blue-700 text-white'>Buy Coin</button>
+                        <button className='btn mt-4 ml-4 bg-red-600 hover:bg-red-700 text-white'>Sell Coin</button>
                     </div>
                 </div>
             </div>
@@ -158,4 +125,4 @@ const ArtifactCard = () => {
     )
 }
 
-export default ArtifactCard
+export default SingleProject
