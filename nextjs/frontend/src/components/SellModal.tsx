@@ -31,6 +31,8 @@ const SellToken = ({ targetAddrress }: SellTokenProps) => {
         try {
             // add !
             const result = await tradeCoin(sellParams, walletClientc!, publicClient);
+            console.log(result);
+            // eslint-disable-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             console.log("Error trading coin:", error);
             toast.error(error)

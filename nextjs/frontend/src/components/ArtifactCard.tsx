@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { usePublicClient, useWalletClient, useAccount } from 'wagmi';
+// import { usePublicClient } from 'wagmi';
 import BuyToken from './BuyModal';
 import SellToken from './SellModal';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 type TokenDetails = {
     zora20Token?: {
@@ -65,13 +65,13 @@ type TokenDetails = {
 
 const ArtifactCard = () => {
     const [tokenDetails, setTokenDetails] = useState<TokenDetails | null>(null)
-    const publicClient = usePublicClient()!;
-    const { data: walletClientc } = useWalletClient()!;
+    // const publicClient = usePublicClient()!;
+    // const { data: walletClientc } = useWalletClient()!;
  
-    const router = useRouter();
+    // const router = useRouter();
     
 
-    const { address } = useAccount();
+    // const { address } = useAccount();
 
    
     const fetchCoinDetails = useCallback(async () => {

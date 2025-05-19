@@ -1,5 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useParams } from 'next/navigation';
+import BuyToken from './BuyModal';
+import SellToken from './SellModal';
+import { truncateAddress } from '@/utils/truncateAddress';
 
 type TokenDetails = {
     zora20Token?: {
@@ -61,15 +64,8 @@ const SingleProject = () => {
     const [tokenDetails, setTokenDetails] = useState<TokenDetails | null>(null)
 
     const { id } = useParams();
+    // const addressZero = "0x0000000000000000000000000000000000000000"
     const fetchCoinDetails = useCallback(async () => {
-        // const response = await getCoin({
-        //     address: "0x224Ba15a5762A1114B0532143d91Fe0B37b1c247",
-        //     chain: base.id,
-        // })
-        // if (response?.data) {
-        //     setTokenDetails(response.data);
-        // }
-        // return response;
         try {
             const url = new URL('https://api-sdk.zora.engineering/coin');
             url.searchParams.append('address', `${id}`);
@@ -90,10 +86,11 @@ const SingleProject = () => {
             if (data) {
                 setTokenDetails(data);
             }
+            // eslint-disable-line @typescript-eslint/no-explicit-any
         } catch (error) {
             console.error("Error fetching coin details:", error);
         }
-    }, [])
+    }, [id])
 
     useEffect(() => {
         fetchCoinDetails()
@@ -107,17 +104,19 @@ const SingleProject = () => {
                 <h1 className='text-3xl font-bold mb-6'>Project Details</h1>
                 <div className='flex flex-col md:flex-row'>
                     <div className='w-full md:w-1/2'>
-                        <img src={dummyImage} alt="Project Image" className="rounded-lg shadow-lg" />
+                        <img src={tokenDetails?.zora20Token?.mediaContent?.previewImage?.medium || dummyImage} alt="Project Image" className="rounded-lg shadow-lg" />
                     </div>
                     <div className='w-full md:w-1/2 p-4'>
-                        <h2 className='text-2xl font-semibold mb-4'>Token Name</h2>
-                        <p className='text-gray-300 mb-6'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at ligula id urna facilisis tincidunt.</p>
+                        <h2 className='text-2xl font-semibold mb-4'>{tokenDetails?.zora20Token?.name}</h2>
+                        <p className='text-gray-300 mb-6'>{tokenDetails?.zora20Token?.description}</p>
                         <div className="mb-6">
                             <h3 className="text-xl font-semibold mb-2">Research Auth Address</h3>
-                            <p className="text-gray-400">0x1234...5678</p>
+                            <p className="text-gray-400">{truncateAddress(tokenDetails?.zora20Token?.address as `0x${string}`)}</p>
                         </div>
                         <button className='btn mt-4 bg-blue-600 hover:bg-blue-700 text-white'>Buy Coin</button>
                         <button className='btn mt-4 ml-4 bg-red-600 hover:bg-red-700 text-white'>Sell Coin</button>
+                        <BuyToken targetAddrress={(tokenDetails?.zora20Token?.address || "0x0000000000000000000000000000000000000000") as `0x${string}`} />
+                    <SellToken targetAddrress={(tokenDetails?.zora20Token?.address || "0x0000000000000000000000000000000000000000") as `0x${string}`} />
                     </div>
                 </div>
             </div>
