@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { useParams } from 'next/navigation';
+// import { useParams } from 'next/navigation';
 import BuyToken from './BuyModal';
 import SellToken from './SellModal';
 import { truncateAddress } from '@/utils/truncateAddress';
-
+import { useRouter } from 'next/router';
 type TokenDetails = {
     zora20Token?: {
         id: string;
@@ -63,12 +63,19 @@ type TokenDetails = {
 const SingleProject = () => {
     const [tokenDetails, setTokenDetails] = useState<TokenDetails | null>(null)
 
-    const { id } = useParams();
+    // const { id } = useParams();
+
+    const router = useRouter();
+    const { query } = router.query;
+
+    // const params = useParams();
+    
     // const addressZero = "0x0000000000000000000000000000000000000000"
     const fetchCoinDetails = useCallback(async () => {
+        if (!query) return;
         try {
             const url = new URL('https://api-sdk.zora.engineering/coin');
-            url.searchParams.append('address', `${id}`);
+            url.searchParams.append('address', `${query}`);
             url.searchParams.append('chain', '8453');
 
             const response = await fetch(url.toString(), {
@@ -89,11 +96,13 @@ const SingleProject = () => {
         } catch (error) {
             console.error("Error fetching coin details:", error);
         }
-    }, [id])
+    }, [query])
 
     useEffect(() => {
         fetchCoinDetails()
     }, [fetchCoinDetails])
+
+    if (!query) return null;
 
 
     const dummyImage = "https://plus.unsplash.com/premium_photo-1723028769916-a767a6b0f719?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZmlsZSUyMGljb258ZW58MHx8MHx8fDA%3D";
