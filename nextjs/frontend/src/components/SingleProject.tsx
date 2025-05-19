@@ -86,7 +86,6 @@ const SingleProject = () => {
             if (data) {
                 setTokenDetails(data);
             }
-            // eslint-disable-line @typescript-eslint/no-explicit-any
         } catch (error) {
             console.error("Error fetching coin details:", error);
         }
