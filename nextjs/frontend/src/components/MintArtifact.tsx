@@ -26,7 +26,6 @@ const MintArtifact = () => {
     const [prompt, setPrompt] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const [name, setName] = useState<string>('')
-    const [symbol, setSymbol] = useState<string>('')
 
     const { startLoading, stopLoading, isLoading } = useLoading()
 
@@ -121,7 +120,7 @@ const MintArtifact = () => {
 
             const coinParams = {
                 name: name,
-                symbol: symbol,
+                symbol: 'MUSE',
                 //'ipfs://bafkreiausuhse4h7c3i4g6jalnasxu5jjondktr335f45elow3epbhog3y'
                 uri: resContractMetaData,
                 payoutRecipient: address as `0x${string}`,
@@ -236,11 +235,7 @@ const MintArtifact = () => {
                             value={name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
                             placeholder='Token Artifact Name' />
                     </div>
-                    <div className='form-group mb-8'>
-                        <input type='text' className='input'
-                            value={symbol} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSymbol(e.target.value)}
-                            placeholder='Artifact Symbol' />
-                    </div>
+                    
                     <div className='form-group mb-8'>
                         <textarea placeholder='Enter description' value={description}
                             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {

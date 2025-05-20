@@ -66,7 +66,7 @@ type TokenDetails = {
 const ArtifactCard = () => {
     const [tokenDetails, setTokenDetails] = useState<TokenDetails | null>(null)
 
-
+    // 0x224Ba15a5762A1114B0532143d91Fe0B37b1c247
    
     const fetchCoinDetails = useCallback(async () => {
         // const response = await getCoin({
