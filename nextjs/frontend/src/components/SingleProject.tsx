@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react'
-// import { useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import BuyToken from './BuyModal';
 import SellToken from './SellModal';
 import { truncateAddress } from '@/utils/truncateAddress';
 import { useRouter } from 'next/router';
+
 type TokenDetails = {
     zora20Token?: {
         id: string;
@@ -63,10 +64,12 @@ type TokenDetails = {
 const SingleProject = () => {
     const [tokenDetails, setTokenDetails] = useState<TokenDetails | null>(null)
 
-    // const { id } = useParams();
+    const params = useParams();
 
     const router = useRouter();
-    const { query } = router.query;
+    const query = params?.id;
+    console.log(params?.id, "query")
+    // 0x224ba15a5762a1114b0532143d91fe0b37b1c247
 
     // const params = useParams();
     
@@ -121,10 +124,13 @@ const SingleProject = () => {
                             <h3 className="text-xl font-semibold mb-2">Research Auth Address</h3>
                             <p className="text-gray-400">{truncateAddress(tokenDetails?.zora20Token?.address as `0x${string}`)}</p>
                         </div>
-                        <button className='btn mt-4 bg-blue-600 hover:bg-blue-700 text-white'>Buy Coin</button>
-                        <button className='btn mt-4 ml-4 bg-red-600 hover:bg-red-700 text-white'>Sell Coin</button>
+                        {/* <button className='btn mt-4 bg-blue-600 hover:bg-blue-700 text-white'>Buy Coin</button>
+                        <button className='btn mt-4 ml-4 bg-red-600 hover:bg-red-700 text-white'>Sell Coin</button> */}
+                        <div className="flex gap-4">
                         <BuyToken targetAddrress={(tokenDetails?.zora20Token?.address || "0x0000000000000000000000000000000000000000") as `0x${string}`} />
-                    <SellToken targetAddrress={(tokenDetails?.zora20Token?.address || "0x0000000000000000000000000000000000000000") as `0x${string}`} />
+                        <SellToken targetAddrress={(tokenDetails?.zora20Token?.address || "0x0000000000000000000000000000000000000000") as `0x${string}`} />
+                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -46,7 +46,7 @@ const BuyToken = ({ targetAddrress }: BuyTokenProps) => {
         <div>
             
 
-            <button className="btn mt-4 bg-blue-600 hover:bg-blue-700 text-white" onClick={() => {
+            <button className="btn  bg-blue-600 hover:bg-blue-700 text-white" onClick={() => {
                 const modal = document.getElementById('my_modal_3') as HTMLDialogElement | null;
                 if (modal) modal.showModal();
             }}>Buy coin</button>

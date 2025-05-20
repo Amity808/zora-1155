@@ -65,13 +65,7 @@ type TokenDetails = {
 
 const ArtifactCard = () => {
     const [tokenDetails, setTokenDetails] = useState<TokenDetails | null>(null)
-    // const publicClient = usePublicClient()!;
-    // const { data: walletClientc } = useWalletClient()!;
- 
-    // const router = useRouter();
-    
 
-    // const { address } = useAccount();
 
    
     const fetchCoinDetails = useCallback(async () => {
@@ -112,7 +106,7 @@ const ArtifactCard = () => {
         fetchCoinDetails()
     }, [fetchCoinDetails])
 
-    console.log(tokenDetails)
+    console.log(tokenDetails?.zora20Token?.symbol)
     return (
         <div>
 
@@ -130,13 +124,17 @@ const ArtifactCard = () => {
                     </h2>
                     <p>{tokenDetails?.zora20Token?.description} Read for ....</p>
                     <div className="card-actions justify-end">
-                    <BuyToken targetAddrress={(tokenDetails?.zora20Token?.address || "0x0000000000000000000000000000000000000000") as `0x${string}`} />
-                    <SellToken targetAddrress={(tokenDetails?.zora20Token?.address || "0x0000000000000000000000000000000000000000") as `0x${string}`} />
+                    <div className="badge badge-outline">Historical</div>
+                        <div className="badge badge-outline cursor-pointer" >
+                        <Link href={`/${tokenDetails?.zora20Token?.address}`}>
+                        View Research
+                        </Link>
+                        </div>
                     </div>
                 </div>
             </div>
             {/* second dummy  */}
-            <div className="card bg-base-100 w-96 shadow-sm">
+            <div className="card bg-base-100 w-96 shadow-sm pt-3">
                 <figure>
                     <img
                         src="/artifact.webp"
@@ -147,10 +145,14 @@ const ArtifactCard = () => {
                         Mongolia Tomb
                         <div className="badge badge-secondary">Artifact</div>
                     </h2>
-                    <p>This is a mongolia tomb, which serves as a sacred tomb for the mongolia. Read for .... <Link href={`/${tokenDetails?.zora20Token?.address}`}></Link> </p>
+                    <p>This is a mongolia tomb, which serves as a sacred tomb for the mongolia.<Link href={`/${tokenDetails?.zora20Token?.address}`}>Read for ...</Link> </p>
                     <div className="card-actions justify-end">
                         <div className="badge badge-outline">Historical</div>
-                        <div className="badge badge-outline cursor-pointer" >Read More</div>
+                        <div className="badge badge-outline cursor-pointer" >
+                        <Link href={`/${tokenDetails?.zora20Token?.address}`}>
+                        View Research
+                        </Link>
+                        </div>
                     </div>
                 </div>
             </div>
