@@ -1,4 +1,4 @@
-import { http, createConfig } from 'wagmi'
+import { http, createConfig, injected } from 'wagmi'
 import { zoraTestnet, zoraSepolia, zora, base, baseSepolia } from 'wagmi/chains'
 import { createPublicClient } from "viem";
 
@@ -6,7 +6,7 @@ import { createPublicClient } from "viem";
 export const config = createConfig({
   chains: [zoraSepolia, zoraTestnet, zora, base, baseSepolia],
   connectors: [
-    // injected(),
+    injected(),
     // safe(),
     // coinbaseWallet(),
     // metaMask()

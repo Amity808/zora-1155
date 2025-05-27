@@ -3,21 +3,23 @@ import React, { useState, useEffect} from 'react'
 import AccountDetails from './Wallet-Componets/AccountDetails'
 import { useSwitchChain, useAccount } from 'wagmi'
 import Link from 'next/link'
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 
 
 const Navbar = () => {
   const { chains, switchChain} = useSwitchChain()
   const { address } = useAccount();
 
-  const [clientReady, setClientReady] = useState(false)
+  // const [clientReady, setClientReady] = useState(false)
 
-  useEffect(() => {
-    setClientReady(true)
-  }, [])
+  // useEffect(() => {
+  //   setClientReady(true)
+  // }, [])
 
-  if (!clientReady) return null // Prevent hydration errors
+  // if (!clientReady) return null // Prevent hydration errors
   return (
-    <div>
+    <div style={{ zIndex: 1000, position: 'relative' }}>
       <div className="navbar bg-black shadow-sm text-white">
         <div className="navbar-start">
           <div className="dropdown">
@@ -63,7 +65,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <AccountDetails />
+          <ConnectButton />
           {/* <a className="btn">Connect Wallet</a> */}
         </div>
       </div>

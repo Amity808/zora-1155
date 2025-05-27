@@ -8,7 +8,13 @@ import { LayoutGridLayer } from "@/components/CardLayout";
 export default function Home() {
   return (
    <div>
+   
+    <div>
     <Navbar />
+    </div>
+    <div className=" h-2 bg-amber-500">
+
+    </div>
      <Hero />
     <ContentLayout />
     <LayoutGridLayer />

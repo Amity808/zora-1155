@@ -12,7 +12,8 @@
     "@google/genai": "^0.12.0",
     "@google/generative-ai": "^0.24.1",
     "@opencampus/ocid-connect-js": "^1.2.6",
-    "@tanstack/react-query": "^5.68.0",
+    "@rainbow-me/rainbowkit": "^2.2.5",
+    "@tanstack/react-query": "^5.77.2",
     "@zoralabs/coins-sdk": "^0.0.8",
     "@zoralabs/protocol-sdk": "^0.13.4",
     "axios": "^1.9.0",
@@ -25,8 +26,8 @@
     "react-dom": "^19.0.0",
     "react-toastify": "^11.0.5",
     "tailwind-merge": "^3.0.2",
-    "viem": "^2.25.0",
-    "wagmi": "^2.14.13"
+    "viem": "2.x",
+    "wagmi": "^2.15.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
