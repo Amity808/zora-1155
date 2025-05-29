@@ -140,60 +140,7 @@ const MintArtifact = () => {
 
 
 
-    // const handleCreateZoraNFT = async () => {
-
-
-    //     try {
-    //         if (!imageFile) {
-    //             alert("Please upload an image file.");
-    //             return;
-    //         }
-
-    //         if (!videoAnime) {
-    //             alert("Please upload an video file.");
-    //             return;
-    //         }
-
-    //         const resTokenMeta = await makeTextNftMetadata({
-    //             text: "MuseumArt",
-    //             description: "Museum Art Tradable token"
-    //         })
-
-    //         const animeFile = await generateImageWithOpenAI(prompt);
-
-
-    //         const resContractMetaData = await makeContractMetadata({
-    //             imageFile,
-    //             name: "Museum Art",
-    //             description: description,
-    //             videoFile: animeFile
-    //         });
-    //         const { parameters, contractAddress } = await create1155({
-    //             contract: {
-    //                 name: "MuseumArtContract",
-    //                 uri: resContractMetaData,
-    //             },
-    //             token: {
-    //                 tokenMetadataURI: resTokenMeta,
-    //                 salesConfig: {
-    //                     erc20Name: "MuseumArt",
-    //                     erc20Symbol: "MAT",
-    //                     saleStart: BigInt(0),
-    //                     marketCountdown: BigInt(24 * 60 * 60),
-    //                     minimumMintsForCountdown: BigInt(1111),
-    //                 },
-    //             },
-    //             account: address!,
-    //             publicClient,
-    //         });
-
-    //         console.log(contractAddress);
-
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
+  
 
 
 
@@ -203,7 +150,8 @@ const MintArtifact = () => {
 
             <div className=' flex items-center flex-col justify-center'>
             <div className="image">
-          <img src={videoAnime} alt="AI Generated Image" />
+          <img src={videoAnime || "./image.png"} 
+          className="w-32 h-32"  alt="AI Generated Image" />
         </div>
 
                 <div className='form-group mb-8'>

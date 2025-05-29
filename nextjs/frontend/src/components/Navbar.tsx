@@ -11,13 +11,13 @@ const Navbar = () => {
   const { chains, switchChain} = useSwitchChain()
   const { address } = useAccount();
 
-  const [clientReady, setClientReady] = useState(false)
+  // const [clientReady, setClientReady] = useState(false)
 
-  useEffect(() => {
-    setClientReady(true)
-  }, [])
+  // useEffect(() => {
+  //   setClientReady(true)
+  // }, [])
 
-  if (!clientReady) return null // Prevent hydration errors
+  // if (!clientReady) return null // Prevent hydration errors
   return (
     <div style={{ zIndex: 1000, position: 'relative' }}>
       <div className="navbar bg-black shadow-sm text-white">
