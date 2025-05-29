@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { truncateAddress } from '@/utils/truncateAddress';
+// import { truncateAddress } from '@/utils/truncateAddress';
 import { fetchProfileBalances } from '@/helper/fetchProfile';
 import { useAccount, useChainId } from 'wagmi';
 import { truncateBalance } from '@/utils/truncateAddress';
@@ -75,16 +75,14 @@ type ProfileResponse = {
   };
 };
 
-interface ProfileCoinBalancesProps {
-  profileData: ProfileResponse;
-}
+
 
 const ProfileCoinBalances: React.FC = () => {
   // const profile = profileData.profile;
   const [profileData, setProfileData] = useState<ProfileResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+console.log(error, loading)
 
   const { address } = useAccount()
   const chainId = useChainId();

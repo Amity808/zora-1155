@@ -1,6 +1,6 @@
 'use client'
-import React, { useState, useEffect} from 'react'
-import AccountDetails from './Wallet-Componets/AccountDetails'
+import React from 'react'
+// import AccountDetails from './Wallet-Componets/AccountDetails'
 import { useSwitchChain, useAccount } from 'wagmi'
 import Link from 'next/link'
 import { ConnectButton } from '@rainbow-me/rainbowkit';

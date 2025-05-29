@@ -9,7 +9,7 @@ const Hero = () => {
         Arts Station, <br /> Sajana Textiles.
       </h2>
       <p className="max-w-xl mx-auto text-sm md:text-lg text-neutral-700 dark:text-neutral-400 text-center">
-    Explore the future of art in our Web3 museum, where Coin's meet
+    Explore the future of art in our Web3 museum, where Coin&apos;s meet
         masterpieces. Discover digital collectibles, blockchain-powered
         exhibits, and immersive experiences, all on the decentralized web.
       </p>

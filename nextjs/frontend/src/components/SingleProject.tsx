@@ -3,7 +3,6 @@ import { useParams } from 'next/navigation';
 import BuyToken from './BuyModal';
 import SellToken from './SellModal';
 import { truncateAddress } from '@/utils/truncateAddress';
-import { useRouter } from 'next/router';
 
 type TokenDetails = {
     zora20Token?: {
@@ -66,7 +65,6 @@ const SingleProject = () => {
 
     const params = useParams();
 
-    const router = useRouter();
     const query = params?.id;
     console.log(params?.id, "query")
     // 0x224ba15a5762a1114b0532143d91fe0b37b1c247

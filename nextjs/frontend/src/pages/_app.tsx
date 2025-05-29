@@ -5,7 +5,7 @@ import type { AppProps } from "next/app";
 
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from 'react-toastify';
-import { Museum } from "@/context/AppContext";
+// import { Museum } from "@/context/AppContext";
 // import { config } from '../config/wagmi-config'; 
 import {
   getDefaultConfig,

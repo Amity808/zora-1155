@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
 // import { usePublicClient } from 'wagmi';
-import BuyToken from './BuyModal';
-import SellToken from './SellModal';
 import Link from 'next/link';
 // import { useRouter } from 'next/router';
 
