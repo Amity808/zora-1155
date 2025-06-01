@@ -14,6 +14,7 @@ import OpenAI from "openai";
 
 const openai = new OpenAI({
     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY!,
+    dangerouslyAllowBrowser: true, // Only use this in a secure environment
 });
 
 
@@ -69,29 +70,50 @@ const MintArtifact = () => {
 
     // TODO implement a generative AI that generate Description to Video
 
-    const generateImageWithOpenAI = async (prompt: string) => {
-        try {
-            const response = await openai.images.generate({
-                model: "dall-e-3", // Use DALL·E 3 model
-                prompt: prompt,
-                n: 1, // Number of images to generate
-                size: "1024x1024", // Image size
-            });
+    // const generateImageWithOpenAI = async (prompt: string) => {
+    //     try {
+    //         const response = await openai.images.generate({
+    //             model: "dall-e-3", // Use DALL·E 3 model
+    //             prompt: prompt,
+    //             n: 1, // Number of images to generate
+    //             size: "1024x1024", // Image size
+    //         });
 
-            const imageUrl = response?.data?.[0].url || null;
-            if (!imageUrl) {
-                throw new Error("Failed to generate image");
-            }
+    //         const imageUrl = response?.data?.[0].url || null;
+    //         if (!imageUrl) {
+    //             throw new Error("Failed to generate image");
+    //         }
         
-             // Set the generated image in state
-            return imageUrl;
+    //          // Set the generated image in state
+    //         return imageUrl;
+    //     } catch (error) {
+    //         console.error("Error generating image with OpenAI:", error);
+    //         throw error;
+    //     }
+    // };
+
+    const generateImageWithOpenAI = async (prompt: string): Promise<string> => {
+        try {
+          const response = await fetch('/api/generate-image', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ prompt }),
+          });
+      
+          if (!response.ok) {
+            throw new Error(`OpenAI API failed: ${response.status}`);
+          }
+      
+          const data = await response.json();
+          return data.imageUrl;
         } catch (error) {
-            console.error("Error generating image with OpenAI:", error);
-            throw error;
+          console.error('Error generating image:', error);
+          throw error;
         }
-    };
-
-
+      };
+      
     const createToken = async () => {
         startLoading();
         try {
@@ -108,6 +130,7 @@ const MintArtifact = () => {
 
             const animeFile = await generateImageWithOpenAI(prompt);
             setVideoAnime(animeFile)
+            console.log(animeFile, "anime file")
 
             if(animeFile) {
 
