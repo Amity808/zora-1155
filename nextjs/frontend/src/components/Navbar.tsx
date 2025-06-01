@@ -59,7 +59,7 @@ const Navbar = () => {
                 </ul>
               </details>
             </li>
-            <li><a>Contact us</a></li>
+            <li><a href="/profile">Profile</a></li>
             {address && <li><Link href={`/arts`}>Artifacts</Link></li>}
             
           </ul>
