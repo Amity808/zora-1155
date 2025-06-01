@@ -3,7 +3,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, // Use NON-public key here
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, 
+  dangerouslyAllowBrowser: true // Use NON-public key here
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
