@@ -136,6 +136,8 @@ const MintArtifact = () => {
                 videoFile: animeFile
             });
 
+            console.log(resContractMetaData, "resContractMetaData")
+
 
             const coinParams = {
                 name: name,
