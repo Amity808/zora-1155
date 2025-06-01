@@ -59,7 +59,7 @@ const Navbar = () => {
                 </ul>
               </details>
             </li>
-            <li><a href="/profile">Profile</a></li>
+            <li><Link href="/profile">Profile</Link></li>
             {address && <li><Link href={`/arts`}>Artifacts</Link></li>}
             
           </ul>
