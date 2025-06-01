@@ -110,6 +110,9 @@ const MintArtifact = () => {
             const animeFile = await generateImageWithOpenAI(prompt);
             setVideoAnime(animeFile)
 
+            if(animeFile) {
+
+            
             const resContractMetaData = await makeContractMetadata({
                 imageFile,
                 name: "Museum Art",
@@ -131,7 +134,7 @@ const MintArtifact = () => {
 
 
             console.log(contractCallParams, "response")
-
+        }
         } catch (error) {
             console.log(error);
             stopLoading();
