@@ -139,7 +139,7 @@ const MintArtifact = () => {
                 videoFile: "aiimage"
             });
 
-            console.log(resContractMetaData, "resContractMetaData")
+            console.log(resContractMetaData, "res ContractMetaData")
 
 
             const coinParams = {
