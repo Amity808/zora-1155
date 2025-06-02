@@ -4,7 +4,7 @@ import OpenAI from 'openai';
 // Use private environment variable (without NEXT_PUBLIC prefix)
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY, // Remove NEXT_PUBLIC prefix
-  // Remove dangerouslyAllowBrowser flag - not needed for server-side
+  // Remove dangerouslyAllowBrowser fla yesg - not needed for server-side
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
