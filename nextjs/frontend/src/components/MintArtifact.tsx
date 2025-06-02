@@ -120,7 +120,10 @@ const MintArtifact = () => {
                 return;
             }
 
-           
+            if (!(imageFile instanceof File)) {
+                alert("Invalid file type. Please upload a valid image file.");
+                return;
+            }
 
             // const animeFile = await generateImageWithOpenAI(prompt);
             // setVideoAnime(animeFile)
