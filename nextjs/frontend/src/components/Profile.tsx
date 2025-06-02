@@ -108,7 +108,7 @@ console.log(error, loading)
   console.log('Profile Data:', profileData);
 
   if (!profileData) {
-    return <div className="text-center text-gray-500">Connect Your Account To View Your Profile.</div>;
+    return <div className="text-center text-gray-500">Loading make sure you have minted an artifact or Connect Your Account To View Your Profile.</div>;
   }
 
   const profile = profileData.profile; 
