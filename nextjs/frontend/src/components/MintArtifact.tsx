@@ -173,10 +173,10 @@ const MintArtifact = () => {
         <div className=' flex justify-center items-center mt-[24px] flex-col'>
 
             <div className=' flex items-center flex-col justify-center'>
-            {/* <div className="image">
+            <div className="image">
           <img src={videoAnime || "./image.png"} 
           className="w-32 h-32"  alt="AI Generated Image" />
-        </div> */}
+        </div>
 
                 <div className='form-group mb-8'>
                     <fieldset className="fieldset">
