@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { fetchProfileBalances } from '@/helper/fetchProfile';
 import { useAccount, useChainId } from 'wagmi';
 import { truncateBalance } from '@/utils/truncateAddress';
+import BuyToken from './BuyModal';
+import SellToken from './SellModal';
 
 type ProfileResponse = {
   profile: {
@@ -164,6 +166,10 @@ console.log(error, loading)
                       alt={edge.node.coin.name}
                       className="rounded-lg shadow-lg w-full"
                     />
+                  </div>
+                  <div>
+                    <SellToken targetAddrress={edge.node.coin.address as `0x${string}`} />
+
                   </div>
                 </div>
               ))}
