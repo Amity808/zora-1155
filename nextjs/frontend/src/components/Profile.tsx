@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { fetchProfileBalances } from '@/helper/fetchProfile';
 import { useAccount, useChainId } from 'wagmi';
 import { truncateBalance } from '@/utils/truncateAddress';
-import BuyToken from './BuyModal';
+// import BuyToken from './BuyModal';
 import SellToken from './SellModal';
 
 type ProfileResponse = {
